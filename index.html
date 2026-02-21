@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Премиум SPA Панель</title>
 
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -16,10 +16,10 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            /* ТОТ САМЫЙ СТАРЫЙ КРАСИВЫЙ ФОН */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
                         url('https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
@@ -30,45 +30,82 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            font-family: 'Segoe UI', Helvetica, sans-serif;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            overflow: hidden;
         }
 
         h1 {
             color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-            margin-bottom: 30px;
-            font-size: 2.5rem;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            margin-bottom: 40px;
+            font-size: 36px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            font-weight: 300;
             text-align: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 50px;
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
+            gap: 25px;
         }
 
         .btn {
             border: none;
-            padding: 30px 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: transform 0.2s;
-            color: white;
+            padding: 30px 45px;
+            font-size: 20px;
+            font-weight: 700;
             text-transform: uppercase;
+            border-radius: 20px;
+            cursor: pointer;
+            min-width: 240px;
+            transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn:active { transform: scale(0.95); }
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(45deg);
+            transition: 0.5s;
+            pointer-events: none;
+        }
 
-        .btn-standart { background: #4a7c59; }
-        .btn-gold { background: #d4af37; color: #000; }
-        .btn-business { background: #1b3a4b; }
-        .btn-platinum { background: #7c6a53; }
+        .btn-standart { background: linear-gradient(135deg, #a3c1ad 0%, #7d9685 100%); color: #1a2a1f; }
+        
+        .btn-gold { 
+            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); 
+            color: #432c0d; 
+            box-shadow: 0 0 20px rgba(191, 149, 63, 0.4);
+        }
+        
+        .btn-business { background: linear-gradient(135deg, #1b4d3e 0%, #0d2b22 100%); }
+        
+        .btn-platinum { background: linear-gradient(135deg, #839160 0%, #5d6842 100%); }
+
+        .btn:active {
+            transform: scale(0.92);
+            filter: brightness(1.1);
+        }
     </style>
 
     <script type="text/javascript">
@@ -77,24 +114,30 @@
         })();
 
         function sendSignal(category) {
+            const btn = event.currentTarget;
+            btn.disabled = true;
             emailjs.send("service_brsik8k", "template_5goji7i", {
                 button_name: category,
                 time: new Date().toLocaleString()
             }).then(function() {
-                alert("Сигнал отправлен: " + category);
-            }, function(err) {
-                alert("Ошибка: " + JSON.stringify(err));
+                alert("Успешно: " + category);
+                btn.disabled = false;
+            }, function() {
+                alert("Ошибка!");
+                btn.disabled = false;
             });
         }
     </script>
 </head>
 <body>
-    <h1>Выбор категории SPA</h1>
-    <div class="grid">
-        <button class="btn btn-standart" onclick="sendSignal('СТАНДАРТ')">СТАНДАРТ</button>
-        <button class="btn btn-gold" onclick="sendSignal('ЗОЛОТО')">ЗОЛОТО</button>
-        <button class="btn btn-business" onclick="sendSignal('БИЗНЕС')">БИЗНЕС</button>
-        <button class="btn btn-platinum" onclick="sendSignal('ПЛАТИНА')">ПЛАТИНА</button>
+    <h1>ВЫБОР КАТЕГОРИИ SPA</h1>
+    <div class="container">
+        <div class="grid">
+            <button class="btn btn-standart" onclick="sendSignal('СТАНДАРТ')">СТАНДАРТ</button>
+            <button class="btn btn-gold" onclick="sendSignal('ЗОЛОТО')">ЗОЛОТО</button>
+            <button class="btn btn-business" onclick="sendSignal('БИЗНЕС')">БИЗНЕС</button>
+            <button class="btn btn-platinum" onclick="sendSignal('ПЛАТИНА')">ПЛАТИНА</button>
+        </div>
     </div>
 </body>
 </html>
