@@ -20,7 +20,7 @@
         }
 
         body {
-            background: #0a0a0a linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
                         url('https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
@@ -42,7 +42,7 @@
             text-transform: uppercase;
             letter-spacing: 6px;
             text-align: center;
-            opacity: 0.9;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.6);
         }
 
         .container {
@@ -51,39 +51,40 @@
             -webkit-backdrop-filter: blur(25px);
             padding: 60px;
             border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 25px;
         }
 
         .btn {
             border: none;
-            height: 80px;
-            width: 260px;
-            font-size: 16px;
+            height: 85px;
+            width: 270px;
+            font-size: 17px;
             font-weight: 400;
             text-transform: uppercase;
             letter-spacing: 3px;
-            border-radius: 18px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             color: white;
             position: relative;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
         }
 
         .btn:active {
-            transform: scale(0.96);
-            filter: brightness(1.2);
+            transform: scale(0.88);
+            filter: brightness(1.5) saturate(1.2);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        .btn-standart { background: linear-gradient(135deg, #a8c69f 0%, #89a87d 100%); color: #fff; }
-        .btn-gold { background: linear-gradient(135deg, #e5c17e 0%, #c29e5d 100%); color: #fff; }
+        .btn-standart { background: linear-gradient(135deg, #a8c69f 0%, #89a87d 100%); }
+        .btn-gold { background: linear-gradient(135deg, #e5c17e 0%, #c29e5d 100%); }
         .btn-business { background: linear-gradient(135deg, #4da384 0%, #347a61 100%); }
         .btn-platinum { background: linear-gradient(135deg, #b8ab7d 0%, #91855a 100%); }
     </style>
@@ -95,16 +96,13 @@
 
         function sendSignal(category) {
             const btn = event.currentTarget;
-            btn.style.opacity = "0.5";
             emailjs.send("service_brsik8k", "template_5goji7i", {
                 button_name: category,
                 time: new Date().toLocaleString()
             }).then(function() {
-                alert("Сигнал отправлен: " + category);
-                btn.style.opacity = "1";
+                alert("Успешно отправлено: " + category);
             }, function() {
-                alert("Ошибка сети");
-                btn.style.opacity = "1";
+                alert("Ошибка отправки");
             });
         }
     </script>
