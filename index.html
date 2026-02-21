@@ -2,23 +2,27 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Премиум SPA Панель</title>
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="SPA Панель">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SPA Панель">
+
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            /* Высокое разрешение, качественный SPA фон */
+            /* Качественный SPA фон */
             background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
-                        url('https://images.unsplash.com/photo-1515377905703-c4788e51af15?q=80&w=2070&auto=format&fit=crop');
+                        url('https://images.unsplash.com/photo-1544161515-4ae6ce6ea858?q=80&w=2070&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -27,85 +31,69 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            font-family: 'Segoe UI', Helvetica, sans-serif;
+            font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+            overflow: hidden;
         }
 
         h1 {
-            color: #fff;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+            color: white;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
             margin-bottom: 40px;
-            font-size: 40px;
-            font-weight: 300;
+            font-size: 36px;
             text-transform: uppercase;
             letter-spacing: 5px;
+            font-weight: 300;
             text-align: center;
         }
 
         .container {
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             padding: 50px;
             border-radius: 40px;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
         }
 
         .grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
+            gap: 25px;
         }
 
         .btn {
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 25px 55px;
-            font-size: 18px;
-            font-weight: 700;
-            text-transform: uppercase;
-            border-radius: 15px;
-            cursor: pointer;
-            min-width: 260px;
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            color: white;
-            letter-spacing: 2px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Цвета кнопок: Дорого и богато */
-        .btn-standart { background: linear-gradient(135deg, #7a8d7f 0%, #4a5d50 100%); }
-        .btn-business { background: linear-gradient(135deg, #1b4d3e 0%, #0a241c 100%); }
-        .btn-gold { 
-            background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); 
-            color: #3a2a0d; 
             border: none;
+            padding: 30px 45px;
+            font-size: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            border-radius: 20px;
+            cursor: pointer;
+            min-width: 240px;
+            transition: all 0.2s ease;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
-        .btn-platinum { background: linear-gradient(135deg, #535e3b 0%, #2d3320 100%); }
 
-        .btn:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-            filter: brightness(1.15);
-        }
+        /* Цвета кнопок */
+        .btn-standart { background: linear-gradient(135deg, #a3c1ad 0%, #7d9685 100%); color: #1a2a1f; }
+        .btn-gold { background: linear-gradient(135deg, #bf953f 0%, #fcf6ba 50%, #b38728 100%); color: #432c0d; }
+        .btn-business { background: linear-gradient(135deg, #1b4d3e 0%, #0d2b22 100%); }
+        .btn-platinum { background: linear-gradient(135deg, #839160 0%, #5d6842 100%); }
 
         .btn:active {
-            transform: translateY(-2px);
+            transform: scale(0.92);
+            filter: brightness(0.8);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         .btn:disabled {
-            background: #333 !important;
-            color: #666;
+            opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
-        }
-
-        @media (max-width: 650px) {
-            .grid { grid-template-columns: 1fr; }
-            h1 { font-size: 30px; }
-            .container { padding: 30px; }
         }
     </style>
+
     <script type="text/javascript">
         (function() {
             emailjs.init("HnFVx9m2zPmPYkWiO");
@@ -113,29 +101,29 @@
 
         function sendSignal(category) {
             const btn = event.currentTarget;
+            if (btn.disabled) return;
+            
             btn.disabled = true;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = "ОТПРАВКА...";
+            const originalText = btn.innerText;
+            btn.innerText = "ОТПРАВКА...";
 
             emailjs.send("service_brsik8k", "template_5goji7i", {
                 button_name: category,
                 time: new Date().toLocaleString()
             }).then(function() {
-                alert("Выбор подтвержден: " + category);
+                alert("Сигнал " + category + " успешно отправлен!");
                 btn.disabled = false;
-                btn.innerHTML = originalText;
-            }, function() {
-                alert("Ошибка! Проверьте соединение.");
+                btn.innerText = originalText;
+            }, function(err) {
+                alert("Ошибка при отправке: " + JSON.stringify(err));
                 btn.disabled = false;
-                btn.innerHTML = originalText;
+                btn.innerText = originalText;
             });
         }
     </script>
 </head>
 <body>
-
-    <h1>Выбор категории SPA</h1>
-
+    <h1>ВЫБОР КАТЕГОРИИ SPA</h1>
     <div class="container">
         <div class="grid">
             <button class="btn btn-standart" onclick="sendSignal('СТАНДАРТ')">СТАНДАРТ</button>
@@ -144,6 +132,5 @@
             <button class="btn btn-platinum" onclick="sendSignal('ПЛАТИНА')">ПЛАТИНА</button>
         </div>
     </div>
-
 </body>
 </html>
